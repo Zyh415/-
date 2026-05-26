@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青铜宝箱 - 抽奖系统</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <h1 class="logo">🎁 青铜宝箱</h1>
+                <div class="nav-links">
+                    <button class="nav-btn active" onclick="switchPage('lottery')">抽奖</button>
+                    <button class="nav-btn" onclick="switchPage('records')">抽奖记录</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 抽奖页面 -->
+        <div id="lottery-page" class="page active">
+            <div class="lottery-container">
+                <div class="lottery-header">
+                    <h2>欢迎来到青铜宝箱</h2>
+                    <p>点击按钮开始您的抽奖之旅！</p>
+                </div>
+
+                <!-- 用户信息表单 -->
+                <div class="form-container" id="form-container">
+                    <form id="user-form" class="user-form">
+                        <div class="form-group">
+                            <label for="username">姓名 *</label>
+                            <input 
+                                type="text" 
+                                id="username" 
+                                name="username" 
+                                placeholder="请输入您的姓名"
+                                required
+                                maxlength="50"
+                            >
+                            <span class="error-message" id="username-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">邮箱 *</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                placeholder="请输入您的邮箱"
+                                required
+                            >
+                            <span class="error-message" id="email-error"></span>
+                        </div>
+
+                        <button type="submit" class="submit-btn">开始抽奖</button>
+                    </form>
+                </div>
+
+                <!-- 抽奖动画区域 -->
+                <div class="lottery-animation" id="lottery-animation" style="display: none;">
+                    <div class="treasure-box">
+                        <div class="box-lid"></div>
+                        <div class="box-body">
+                            <div class="sparkles">
+                                <span class="sparkle"></span>
+                                <span class="sparkle"></span>
+                                <span class="sparkle"></span>
+                                <span class="sparkle"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="animation-text">正在为您开启宝箱...</p>
+                </div>
+
+                <!-- 抽奖结果区域 -->
+                <div class="result-container" id="result-container" style="display: none;">
+                    <div class="result-card">
+                        <h3 id="result-title">恭喜您！</h3>
+                        <div class="prize-display">
+                            <div class="prize-icon" id="prize-icon">🏅</div>
+                            <div class="prize-info">
+                                <h4 id="prize-name">起点岛勋章</h4>
+                                <p id="prize-description">您获得了一枚荣誉勋章！</p>
+                            </div>
+                        </div>
+                        <div class="result-details">
+                            <p>姓名: <strong id="result-username"></strong></p>
+                            <p>邮箱: <strong id="result-email"></strong></p>
+                            <p>抽奖时间: <strong id="result-time"></strong></p>
+                        </div>
+                        <button class="reset-btn" onclick="resetLottery()">再试一次</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 抽奖记录页面 -->
+        <div id="records-page" class="page">
+            <div class="records-container">
+                <div class="records-header">
+                    <h2>抽奖记录</h2>
+                    <div class="records-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">总人数</span>
+                            <span class="stat-value" id="total-count">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">起点岛勋章</span>
+                            <span class="stat-value" id="medal-count">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">咖啡券</span>
+                            <span class="stat-value" id="coffee-count">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="records-filters">
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        placeholder="搜索姓名或邮箱..."
+                        class="search-box"
+                    >
+                    <select id="filter-prize" class="filter-select">
+                        <option value="">所有奖品</option>
+                        <option value="起点岛勋章">起点岛勋章</option>
+                        <option value="咖啡券">咖啡券</option>
+                    </select>
+                </div>
+
+                <div class="records-table-wrapper">
+                    <table class="records-table">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>姓名</th>
+                                <th>邮箱</th>
+                                <th>获奖项目</th>
+                                <th>抽奖时间</th>
+                            </tr>
+                        </thead>
+                        <tbody id="records-tbody">
+                            <tr class="empty-row">
+                                <td colspan="5">暂无抽奖记录</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="records-footer">
+                    <button class="export-btn" onclick="exportRecords()">导出为 CSV</button>
+                    <button class="clear-btn" onclick="clearRecords()">清空记录</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
